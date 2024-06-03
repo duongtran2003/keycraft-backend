@@ -65,6 +65,8 @@ class AuthController {
       res.cookie("jwt", "", {
         httpOnly: true,
         maxAge: 0,
+        sameSite: "none",
+        secure: true,
       });
       return res.status(400).json({
         "message": "really funny today arent we?"
@@ -74,6 +76,8 @@ class AuthController {
       res.cookie("jwt", "", {
         httpOnly: true,
         maxAge: 0,
+        sameSite: "none",
+        secure: true,
       });
       return res.status(400).json({
         "message": "really funny today arent we?"
@@ -88,18 +92,22 @@ class AuthController {
       res.cookie("jwt", "", {
         httpOnly: true,
         maxAge: 0,
+        sameSite: "none",
+        secure: true,
       });
       return res.status(401).json({
         "message": "Wrong credentials!",
       });
     }
-   
+
     const matched = await bcrypt.compare(password, user.password);
 
     if (!matched) {
       res.cookie("jwt", "", {
         httpOnly: true,
         maxAge: 0,
+        sameSite: "none",
+        secure: true,
       });
       return res.status(401).json({
         "message": "Wrong credentials!",
@@ -111,21 +119,25 @@ class AuthController {
         "message": "Server error: No secret key",
       });
     }
-    
+
     const token = await jwt.sign({ username: user.name, userId: user._id }, process.env.SECRET);
     res.cookie("jwt", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24,
+      sameSite: "none",
+      secure: true,
     });
     user = user.toObject();
     delete user.password;
     return res.status(200).json(user);
   }
-  
+
   logout(req, res) {
     res.cookie("jwt", "", {
       httpOnly: true,
       maxAge: 0,
+      sameSite: "none",
+      secure: true,
     });
     return res.status(200).json({
       "message": "log out successfully"
