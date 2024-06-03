@@ -4,6 +4,7 @@ import { router as userRouter } from "./user.js";
 import { router as manufacturerRouter } from "./manufacturer.js";
 import { router as productRouter } from "./product.js";
 import { router as orderRouter } from "./order.js";
+import { router as chatRouter } from "./chat.js";
 
 const router = express.Router();
 
@@ -12,6 +13,7 @@ router.use("/user", userRouter);
 router.use("/manufacturer", manufacturerRouter);
 router.use("/product", productRouter);
 router.use('/order', orderRouter);
+router.use("/chat", chatRouter);
 
 export {
   router

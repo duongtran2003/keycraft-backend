@@ -13,6 +13,7 @@
     "nodemon": "^3.0.3"
   },
   "dependencies": {
+    "bard-api-node": "^2.1.0",
     "bcrypt": "^5.1.1",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
