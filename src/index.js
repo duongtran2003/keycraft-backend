@@ -39,6 +39,9 @@ app.use(router);
 connectToDB();
 const server = app.listen(port, (err) => {
   console.log(`Listening to port ${port}`);
+  for (let origin of origins) {
+    console.log(origin);
+  }
 });
 
 
