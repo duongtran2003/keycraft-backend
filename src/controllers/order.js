@@ -11,9 +11,7 @@ import { User } from "../models/user.js";
 
 class OrderController {
   async add(req, res) {
-    const userId = res.locals.claims.userId;
-
-    const { shipping_address, phone_number, products } = req.body;
+    const { shipping_address, phone_number, products, userId } = req.body;
 
     let newOrder = {
       user: new mongoose.Types.ObjectId(userId),
@@ -84,11 +82,11 @@ class OrderController {
       });
     }
   }
-  
+
   async index(req, res) {
     const userId = res.locals.claims.userId;
     const user = await User.findById(userId);
-    
+
     let orders = [];
 
     if (user.role) {
@@ -98,9 +96,9 @@ class OrderController {
     else {
       orders = await Order.find({ user: userId });
     }
-    
+
     let allOrders = [];
-    
+
     for (let ord of orders) {
       let order = ord.toObject();
       let unitsList = order.units;
@@ -142,7 +140,7 @@ class OrderController {
     }
     return res.status(200).json(allOrders);
   }
-  
+
   async update(req, res) {
     //chi cho phep admin update trang thai
     const { id, status } = req.body;
@@ -154,7 +152,7 @@ class OrderController {
       'message': "success",
     });
   }
-  
+
   async delete(req, res) {
     const id = req.params.id;
 
@@ -174,16 +172,16 @@ class OrderController {
         "message": "invalid id"
       });
     }
-    
+
     Order.findByIdAndDelete(id)
-    .then(() => {
-      return res.status(200).json({
-        "message": "success",
+      .then(() => {
+        return res.status(200).json({
+          "message": "success",
+        })
       })
-    })
-    .catch((err) => {
-      return res.stasus(500).json(err);
-    })
+      .catch((err) => {
+        return res.stasus(500).json(err);
+      })
   }
 }
 
