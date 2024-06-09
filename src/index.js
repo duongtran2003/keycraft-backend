@@ -12,6 +12,8 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT;
 
+app.enable('trust proxy');
+
 app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({

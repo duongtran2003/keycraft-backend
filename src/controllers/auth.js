@@ -62,23 +62,11 @@ class AuthController {
     const { username, password } = req.body;
     const validator = new Validator();
     if (username === undefined || password === undefined) {
-      res.cookie("jwt", "", {
-        httpOnly: true,
-        maxAge: 0,
-        sameSite: "none",
-        secure: true,
-      });
       return res.status(400).json({
         "message": "really funny today arent we?"
       });
     }
     if (!validator.isUsername(username) || !validator.isPassword(password)) {
-      res.cookie("jwt", "", {
-        httpOnly: true,
-        maxAge: 0,
-        sameSite: "none",
-        secure: true,
-      });
       return res.status(400).json({
         "message": "really funny today arent we?"
       });
@@ -89,12 +77,6 @@ class AuthController {
     let user = await User.findOne({ name: username });
 
     if (!user) {
-      res.cookie("jwt", "", {
-        httpOnly: true,
-        maxAge: 0,
-        sameSite: "none",
-        secure: true,
-      });
       return res.status(401).json({
         "message": "Wrong credentials!",
       });
@@ -103,12 +85,6 @@ class AuthController {
     const matched = await bcrypt.compare(password, user.password);
 
     if (!matched) {
-      res.cookie("jwt", "", {
-        httpOnly: true,
-        maxAge: 0,
-        sameSite: "none",
-        secure: true,
-      });
       return res.status(401).json({
         "message": "Wrong credentials!",
       });
@@ -120,7 +96,7 @@ class AuthController {
       });
     }
 
-    const token = await jwt.sign({ username: user.name, userId: user._id }, process.env.SECRET);
+    const token = jwt.sign({ username: user.name, userId: user._id }, process.env.SECRET);
     res.cookie("jwt", token, {
       httpOnly: true,
       maxAge: 1000 * 60 * 60 * 24,
