@@ -10,7 +10,8 @@ class ChatController {
     const message = req.body.message;
 
     this.bard.initializeChat(process.env.BARD_API_KEY);
-    const response = await this.bard.getBardResponse("Cho tôi một câu trả lời ngắn gọn cho một câu hỏi nhỏ về bàn phím cơ (mechanical keyboard): " + message);
+    const context = "Hãy tưởng tượng bạn là nhân viên tư vấn cho khách hàng về bàn phím cho cửa hàng bán phím, trả lời xúc tích ngắn gọn nhưng phải lễ phép lịch sử đầy đủ tế nhị. Sau đây là câu hỏi của tôi: ";
+    const response = await this.bard.getBardResponse(context + message);
     return res.status(200).json(
       {
         response: response.text
