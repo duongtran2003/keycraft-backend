@@ -6,7 +6,7 @@ import { isAdmin } from "../middlewares/guards/isAdmin.js";
 let router = express.Router();
 let orderController = new OrderController();
 
-router.post('/create', jwtGuard, orderController.add);
+router.post('/create', orderController.add);
 router.get('/index', jwtGuard, orderController.index);
 router.delete('/delete/:id', jwtGuard, orderController.delete);
 router.put('/update', jwtGuard, isAdmin, orderController.update);
